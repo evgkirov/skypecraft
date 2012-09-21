@@ -15,6 +15,8 @@ sys.setdefaultencoding('utf-8')
 
 class Daemon(object):
 
+    commands = ['players']
+
     def __init__(self):
         self.log('Hello!')
         self.setup_skype()
@@ -75,10 +77,13 @@ class Daemon(object):
     def on_skype_message(self, msg, status):
         if status != 'RECEIVED':
             return
-        self.log('Received message from Skype in %s' % msg.ChatName)
         if msg.ChatName != settings.SKYPE_CHAT_NAME:
             return
         msg.MarkAsSeen()
+        if msg.Body in self.commands:
+            self.log('Someone has sent a command "%s"' % msg.Body)
+            getattr(self, 'command_%s' % msg.Body)()
+            return
         self.send_rcon(u'[Skype] <%s> %s' % (msg.Sender.FullName, msg.Body))
 
     def on_server_log(self, line):
@@ -86,6 +91,9 @@ class Daemon(object):
         match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s(\<.+\>\s.+)$').match(line)
         if match:
             self.send_skype(match.groups()[0])
+
+    def command_players(self):
+        self.send_skype(self.rcon.command('list').replace('online:', 'online: '))
 
 
 if __name__ == '__main__':
