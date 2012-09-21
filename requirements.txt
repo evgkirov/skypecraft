@@ -1,0 +1,4 @@
+Skype4Py==1.0.32.0
+rconite==1.0
+tailer==0.3
+pytils==0.2.3
