@@ -4,6 +4,7 @@ import re
 import Skype4Py
 import sys
 import tailer
+import textwrap
 from pytils import translit
 
 import settings
@@ -67,7 +68,8 @@ class Daemon(object):
 
     def send_rcon(self, msg):
         msg = translit.translify(msg)
-        self.rcon.command('say %s' % msg)
+        for part in textwrap.wrap(msg):
+            self.rcon.command('say %s' % part)
         self.log('Sent to Minecraft: %s' % msg)
 
     def on_skype_message(self, msg, status):
