@@ -1,3 +1,9 @@
+# Skypecraft
+#
+# Copyright (c) 2012 Evgeniy Kirov
+# See the file LICENSE for copying permission.
+# https://github.com/kirov/skypecraft
+
 from datetime import datetime
 import rconite
 import re
