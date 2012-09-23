@@ -3,8 +3,9 @@ Skypecraft
 
 Skypecraft is a small Python script that connects an in-game chat on your Minecraft server with a group conversation in Skype keeping them in sync. It should be useful on small private servers.
 
-![minecraft screenshot](https://raw.github.com/wiki/kirov/skypecraft/screenshots/minecraft.jpg)
 ![skype screenshot](https://raw.github.com/wiki/kirov/skypecraft/screenshots/skype.png)
+
+![minecraft screenshot](https://raw.github.com/wiki/kirov/skypecraft/screenshots/minecraft.jpg)
 
 How to install
 --------------
