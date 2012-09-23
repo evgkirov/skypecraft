@@ -35,7 +35,9 @@ Known issues
 * If you're running OS X and getting a segmentation fault, then you need to run Skypecraft with this command: `VERSIONER_PYTHON_PREFER_32_BIT=yes python skypecraft.py`.
 * My English isn't perfect, so I'm sure that this README contains some grammar errors.
 
-Support
--------
+License & support
+-----------------
 
-* [Github](https://github.com/kirov/skypecraft)
+This project is hosted on Github https://github.com/kirov/skypecraft and is licensed under MIT license.
+
+If you have any questions, you can ask them in the project's thread on Minecraft forums.
