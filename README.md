@@ -21,7 +21,7 @@ How to install
 9. Open it with any text editor such as Notepad. Make sure that your settings are correct.
 10. Okay, it's time to run the script.
 
-How to run
+How to use
 ----------
 
 Run Minecraft server and Skype as usual. Then open the command line and try to execute `skypecraft.py` (Windows) or `python skypecraft.py` (OS X, Linux). Skype may request your permission for the script to access API: allow it.
@@ -38,6 +38,6 @@ Known issues
 License & support
 -----------------
 
-This project is hosted on Github https://github.com/kirov/skypecraft and is licensed under MIT license.
+This project is hosted on GitHub https://github.com/kirov/skypecraft and is licensed under MIT license.
 
-If you have any questions, you can ask them in the project's thread on Minecraft forums.
+If you have any questions, you can ask them in the [official thread on Minecraft forums](http://www.minecraftforum.net/topic/1493588-software-skypecraft-01/).
