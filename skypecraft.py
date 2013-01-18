@@ -23,7 +23,8 @@ sys.setdefaultencoding('utf-8')
 
 class Daemon(object):
 
-    commands = ['players']
+    skype_commands = ['players', 'call']
+    minecraft_commands = ['call']
 
     def __init__(self):
         self.log('Hello!')
@@ -56,6 +57,7 @@ class Daemon(object):
         self.skype = Skype4Py.Skype()
         self.skype.Attach()
         self.skype.OnMessageStatus = lambda *a, **kw: self.on_skype_message(*a, **kw)
+        self.skype.OnCallStatus = lambda *a, **kw: self.on_skype_call(*a, **kw)
         self.skype_chat = self.skype.Chat(settings.SKYPE_CHAT_NAME)
         self.log('Attached to Skype')
 
@@ -88,13 +90,22 @@ class Daemon(object):
         if msg.ChatName != settings.SKYPE_CHAT_NAME:
             return
         msg.MarkAsSeen()
-        if msg.Body in self.commands:
+        if msg.Body in self.skype_commands:
             self.log('Someone has sent a command "%s"' % msg.Body)
             getattr(self, 'command_%s' % msg.Body)()
             return
         self.send_rcon(u'[Skype] <%s> %s' % (msg.Sender.FullName, msg.Body))
 
+    def on_skype_call(self, *args, **kwargs):
+        self.skype.Mute = True
+
     def on_server_log(self, line):
+        # checking if user command
+        match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s\<.+\>\s(.+)$').match(line)
+        if match and match.groups()[0] in self.minecraft_commands:
+            self.log('Someone has sent a command "%s"' % match.groups()[0])
+            getattr(self, 'command_%s' % match.groups()[0])()
+            return
         # checking if this is a message from user
         match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s(\<.+\>\s.+)$').match(line)
         if match:
@@ -103,6 +114,11 @@ class Daemon(object):
     def command_players(self):
         self.send_skype(self.rcon.command('list').replace('online:', 'online: '))
 
+    def command_call(self):
+        try:
+            self.skype.PlaceCall(settings.SKYPE_CHAT_NAME)
+        except ValueError:
+            pass
 
 if __name__ == '__main__':
     d = Daemon()
