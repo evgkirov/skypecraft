@@ -80,7 +80,7 @@ class Daemon(object):
 
     def send_rcon(self, msg):
         msg = translit.translify(msg)
-        for part in textwrap.wrap(msg):
+        for part in textwrap.wrap(msg, 60):
             self.rcon.command('say %s' % part)
         self.log('Sent to Minecraft: %s' % msg)
 
