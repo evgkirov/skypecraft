@@ -26,11 +26,21 @@ How to use
 
 Run Minecraft server and Skype as usual. Then open the command line and try to execute `skypecraft.py` (Windows) or `python skypecraft.py` (OS X, Linux). Skype may request your permission for the script to access API: allow it.
 
+
+Commands
+--------
+
+Users can use the following commands in the chat. Simply type them without slashes or something.
+
+* `players` (available only in Skype chat) — displays a list of players that are currently playing on server.
+* `call` (available both in Skype and in-game chats) — starts Skype conference call.
+
+
 Known issues
 ------------
 
 * Skypecraft hasn't been deeply tested on operating systems other than Windows.
-* Skypecraft has been only tested with vanilla 1.3.2 server.
+* Skypecraft has been only tested with vanilla 1.3.2—1.4.6 server.
 * Skypecraft doesn't support unicode at this time, so messages in Chinese (for example) may not be displayed properly. Although russian messages from Skype will be automatically transliterated.
 * If you're running OS X and getting a segmentation fault, then you need to run Skypecraft with this command: `VERSIONER_PYTHON_PREFER_32_BIT=yes python skypecraft.py`.
 * My English isn't perfect, so I'm sure that this README contains some grammar errors.
