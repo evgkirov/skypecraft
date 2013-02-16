@@ -40,7 +40,7 @@ Known issues
 ------------
 
 * Skypecraft hasn't been deeply tested on operating systems other than Windows.
-* Skypecraft has been only tested with vanilla 1.3.2—1.4.6 server.
+* Skypecraft has been only tested with vanilla 1.3.2—1.4.7 server.
 * Skypecraft doesn't support unicode at this time, so messages in Chinese (for example) may not be displayed properly. Although russian messages from Skype will be automatically transliterated.
 * If you're running OS X and getting a segmentation fault, then you need to run Skypecraft with this command: `VERSIONER_PYTHON_PREFER_32_BIT=yes python skypecraft.py`.
 * My English isn't perfect, so I'm sure that this README contains some grammar errors.
