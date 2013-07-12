@@ -13,7 +13,6 @@ import Skype4Py
 import sys
 import tailer
 import textwrap
-from pytils import translit
 
 import settings
 
@@ -79,8 +78,8 @@ class Daemon(object):
         self.log('Sent to Skype: %s' % msg)
 
     def send_rcon(self, msg):
-        msg = translit.translify(msg)
         for part in textwrap.wrap(msg, 60):
+            part = part.encode('utf-8')
             self.rcon.command('say %s' % part)
         self.log('Sent to Minecraft: %s' % msg)
 
@@ -101,6 +100,7 @@ class Daemon(object):
 
     def on_server_log(self, line):
         # checking if user command
+        line = line.decode(settings.MINECRAFT_SERVER_LOG_ENCODING)
         match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s\<.+\>\s(.+)$').match(line)
         if match and match.groups()[0] in self.minecraft_commands:
             self.log('Someone has sent a command "%s"' % match.groups()[0])
