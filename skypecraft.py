@@ -3,7 +3,7 @@
 # Skypecraft
 # https://github.com/kirov/skypecraft
 #
-# Copyright (c) 2012 Evgeniy Kirov
+# Copyright (c) 2012-2013 Evgeniy Kirov
 # See the file LICENSE for copying permission.
 
 from datetime import datetime
