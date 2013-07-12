@@ -15,7 +15,7 @@ How to install
 3. Download and install [Skype](http://www.skype.com/intl/en/get-skype/on-your-computer/). Log in. Remember that Skypecraft works only if you install Skype and Minecraft server on the same machine.
 4. Invite the newly created Skype user to your group chat.
 5. Download and install [Python 2.x](http://python.org/download/). If you are OS X or Linux user, you may not need this. 32-bit version is preferable.
-6. Did you [download Skypecraft](https://github.com/kirov/skypecraft/tags) already? Unzip it somewhere.
+6. Did you [download Skypecraft](https://github.com/kirov/skypecraft/releases) already? Unzip it somewhere.
 7. Now you need to install a few more dependencies. If you are familiar with Python, you may prefer using `pip` or `easy_install`. Otherwise you should locate the file called `dependencies.zip` and unpack its contents into the same directory which contains `skypecraft.py`.
 8. Rename `settings.py.example` to `settings.py`.
 9. Open it with any text editor such as Notepad. Make sure that your settings are correct.
