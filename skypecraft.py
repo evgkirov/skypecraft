@@ -52,6 +52,11 @@ class Daemon(object):
         )
         sys.stdout.flush()
 
+    def sanitize(self, line):
+        # line = re.compile("\x1f|\x02|\x12|\x0f|\x16|\x03(?:\d{1,2}(?:,\d{1,2})?)?", re.UNICODE).sub('', line)
+        line = re.compile("(?:\xA7.)|(?:\x1B\[(?:\d{1,2};\d{1,2};\d{1,2})?m)", re.UNICODE).sub('', line)
+        return line
+
     def setup_skype(self):
         self.skype = Skype4Py.Skype()
         self.skype.Attach()
@@ -99,8 +104,8 @@ class Daemon(object):
         self.skype.Mute = True
 
     def on_server_log(self, line):
+        line = self.sanitize(line).decode(settings.MINECRAFT_SERVER_LOG_ENCODING)
         # checking if user command
-        line = line.decode(settings.MINECRAFT_SERVER_LOG_ENCODING)
         match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s\<.+\>\s(.+)$').match(line)
         if match and match.groups()[0] in self.minecraft_commands:
             self.log('Someone has sent a command "%s"' % match.groups()[0])
@@ -112,7 +117,10 @@ class Daemon(object):
             self.send_skype(match.groups()[0])
 
     def command_players(self):
-        self.send_skype(self.rcon.command('list').replace('online:', 'online: '))
+        line = self.rcon.command('list')
+        line = self.sanitize(line)
+        line = line.replace('online:', 'online: ')
+        self.send_skype(line)
 
     def command_call(self):
         try:
