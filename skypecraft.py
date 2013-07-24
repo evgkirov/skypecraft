@@ -54,7 +54,7 @@ class Daemon(object):
 
     def sanitize(self, line):
         # line = re.compile("\x1f|\x02|\x12|\x0f|\x16|\x03(?:\d{1,2}(?:,\d{1,2})?)?", re.UNICODE).sub('', line)
-        line = re.compile("(?:\xA7.)|(?:\x1B\[(?:\d{1,2};\d{1,2};\d{1,2})?m)", re.UNICODE).sub('', line)
+        line = re.compile("(?:\xA7.)|(?:\x1B\[[\d;]*m)", re.UNICODE).sub('', line)
         return line
 
     def setup_skype(self):
