@@ -96,8 +96,8 @@ class Daemon(object):
         msg.MarkAsSeen()
         if msg.Body in self.skype_commands:
             self.log('Someone has sent a command "%s"' % msg.Body)
-            getattr(self, 'command_%s' % msg.Body)()
-            return
+            if getattr(self, 'command_%s' % msg.Body)():
+                return
         self.send_rcon(u'[Skype] <%s> %s' % (msg.Sender.FullName, msg.Body))
 
     def on_skype_call(self, *args, **kwargs):
@@ -106,12 +106,11 @@ class Daemon(object):
     def on_server_log(self, line):
         line = self.sanitize(line).decode(settings.MINECRAFT_SERVER_LOG_ENCODING)
         # checking if user command
-        if settings.CALL_COMMAND == 'on':
-			match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s\<.+\>\s(.+)$').match(line)
-			if match and match.groups()[0] in self.minecraft_commands:
-				self.log('Someone has sent a command "%s"' % match.groups()[0])
-				getattr(self, 'command_%s' % match.groups()[0])()
-				return
+        match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s\<.+\>\s(.+)$').match(line)
+        if match and match.groups()[0] in self.minecraft_commands:
+            self.log('Someone has sent a command "%s"' % match.groups()[0])
+            if getattr(self, 'command_%s' % match.groups()[0])():
+                return
         # checking if this is a message from user
         match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s(\<.+\>\s.+)$').match(line)
         if match:
@@ -122,12 +121,16 @@ class Daemon(object):
         line = self.sanitize(line)
         line = line.replace('online:', 'online: ')
         self.send_skype(line)
+        return True
 
     def command_call(self):
+        if settings.CALL_COMMAND != 'on':
+            return False
         try:
             self.skype.PlaceCall(settings.SKYPE_CHAT_NAME)
         except ValueError:
             pass
+        return True
 
 if __name__ == '__main__':
     d = Daemon()
