@@ -106,11 +106,12 @@ class Daemon(object):
     def on_server_log(self, line):
         line = self.sanitize(line).decode(settings.MINECRAFT_SERVER_LOG_ENCODING)
         # checking if user command
-        match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s\<.+\>\s(.+)$').match(line)
-        if match and match.groups()[0] in self.minecraft_commands:
-            self.log('Someone has sent a command "%s"' % match.groups()[0])
-            getattr(self, 'command_%s' % match.groups()[0])()
-            return
+        if settings.CALL_COMMAND == 'on':
+			match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s\<.+\>\s(.+)$').match(line)
+			if match and match.groups()[0] in self.minecraft_commands:
+				self.log('Someone has sent a command "%s"' % match.groups()[0])
+				getattr(self, 'command_%s' % match.groups()[0])()
+				return
         # checking if this is a message from user
         match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s(\<.+\>\s.+)$').match(line)
         if match:
