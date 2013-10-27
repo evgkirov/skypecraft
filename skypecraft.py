@@ -75,7 +75,7 @@ class Daemon(object):
 
     def setup_server_log(self):
         self.server_log = open(settings.MINECRAFT_SERVER_LOG)
-        self.log('Opened server.log')
+        self.log('Opened server log')
 
     def send_skype(self, msg):
         msg = str(msg.decode('utf-8', errors='ignore'))
@@ -108,19 +108,23 @@ class Daemon(object):
 
     def on_server_log(self, line):
         line = self.sanitize(line).decode(settings.MINECRAFT_SERVER_LOG_ENCODING)
-        # checking if user command
-        match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s\<.+\>\s(\w+)(\s.+)?$').match(line)
-        if match and match.groups()[0] in self.minecraft_commands:
-            command = match.groups()[0]
-            args = match.groups()[1]
-            args = args.split() if args else []
+        match = re.compile(r'^\[[0-9:]{8}\]\s\[Server\sthread\/INFO\]:\s\<(.+)\>\s(.+)$').match(line)
+        if not match:
+            return
+        user = match.groups()[0]
+        message = match.groups()[1]
+        command_args = message.split()
+        try:
+            command = command_args.pop(0)
+        except IndexError:
+            command = None
+        # this is a user command
+        if command in self.minecraft_commands:
             self.log('Someone has sent a command "%s"' % command)
-            if getattr(self, 'command_%s' % command)(*args):
+            if getattr(self, 'command_%s' % command)(*command_args):
                 return
-        # checking if this is a message from user
-        match = re.compile('^[0-9\-\s:]{20}\[INFO\]\s(\<.+\>\s.+)$').match(line)
-        if match:
-            self.send_skype(match.groups()[0])
+        # this is a message from user
+        self.send_skype(u'<%s> %s' % (user, message))
 
     def command_players(self, *args):
         line = self.rcon.command('list')

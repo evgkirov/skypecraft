@@ -8,16 +8,16 @@ MINECRAFT_RCON_PORT = 25575
 # Same as rcon.password in your server.properties.
 MINECRAFT_RCON_PASSWORD = ''
 
-# Location of server.log. Do not use backslashes (\), use regular slashes (/) instead.
-MINECRAFT_SERVER_LOG = 'C:/minecraft_server/server.log'
+# Location of latest.log. Do not use backslashes (\), use regular slashes (/) instead.
+MINECRAFT_SERVER_LOG = 'C:/minecraft_server/logs/latest.log'
 
 # Encoding of the file. "cp1251" is for Cyrillic on Windows.
 MINECRAFT_SERVER_LOG_ENCODING = 'cp1251'
 
-# In game skype call command
-# on or off
-CALL_COMMAND = 'on'
-
 # Open your group chat, type "/get name" (without any slashes) and hit Enter.
 # Then copy everything after "name=" and paste it here.
 SKYPE_CHAT_NAME = '#nickname1/$nickname2;f549630fbce3d5c7'
+
+# In game skype call command
+# on or off
+CALL_COMMAND = 'on'
