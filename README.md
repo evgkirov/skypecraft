@@ -40,7 +40,7 @@ Known issues
 ------------
 
 * Skypecraft hasn't been deeply tested on operating systems other than Windows.
-* Skypecraft has been only tested with vanilla 1.3.2—1.6.2 server.
+* Latest Skypecraft release works only with Minecraft 1.7 and newer versions. If you're looking for 1.6 compatibility, check out Skypecraft version 0.1.2. 
 * If you're running OS X and getting a segmentation fault, then you need to run Skypecraft with this command: `VERSIONER_PYTHON_PREFER_32_BIT=yes python skypecraft.py`.
 * My English isn't perfect, so I'm sure that this README contains some grammar errors.
 
