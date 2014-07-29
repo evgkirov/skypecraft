@@ -29,3 +29,6 @@ pip-log.txt
 *.sublime-*
 settings.py
 rconite.py
+
+*.iml
+.idea
